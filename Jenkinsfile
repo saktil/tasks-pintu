@@ -1,49 +1,11 @@
-pipeline {
+node {
+    checkout scm
 
-  environment {
-    dockerimagename = "leonswww/nodeapp"
-    dockerImage = ""
-  }
-
-  agent any
-
-  stages {
-
-    stage('Checkout Source') {
-      steps {
-        git 'https://github.com/saktil/tasks-pintu.git'
-      }
+    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub'){
+        def customImage = docker.build("leonswww/nodeapp")
+        customImage.push()
     }
-
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build dockerimagename
-        }
-      }
-    }
-
-    stage('Pushing Image') {
-      environment {
-               registryCredential = 'leon'
-           }
-      steps{
-        script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("latest")
-          }
-        }
-      }
-    }
-
- //   stage('Deploying App to Kubernetes') {
- //     steps {
- //       script {
- //         kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
- //        }
- //     }
- //   }
-
-  }
-
+    
+    # deploy to kubernetes
+   # kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
 }
