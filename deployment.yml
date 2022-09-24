@@ -16,12 +16,6 @@ spec:
     spec:
       containers:
       - name: nodeserver
-        image: thetips4you/nodeapp:latest
+        image: leonswww/nodeapp:latest
         ports:
         - containerPort: 3000
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-
