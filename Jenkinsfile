@@ -6,6 +6,4 @@ node {
         customImage.push()
     }
 
-    #deploy to kubernetes
-    #kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
 }
